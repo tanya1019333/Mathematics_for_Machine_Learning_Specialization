@@ -23,21 +23,33 @@
     - Example: Let’s consider two vectors:
 
       $\vec{a} = \begin{bmatrix} 2 \\ 3 \end{bmatrix}, \quad \vec{b} = \begin{bmatrix} 4 \\ 1 \end{bmatrix}$  
+
       - `Vector Addition:`
+
         $\vec{a} + \vec{b} = \begin{bmatrix} 2 \\ 3 \end{bmatrix} + \begin{bmatrix} 4 \\ 1 \end{bmatrix} = \begin{bmatrix} 2+4 \\ 3+1 \end{bmatrix} = \begin{bmatrix} 6 \\ 4 \end{bmatrix}$
+
       - `Vector Subtraction:`
+
         $\vec{a} - \vec{b} = \begin{bmatrix} 2 \\ 3 \end{bmatrix} - \begin{bmatrix} 4 \\ 1 \end{bmatrix} = \begin{bmatrix} 2-4 \\ 3-1 \end{bmatrix} = \begin{bmatrix} -2 \\ 2 \end{bmatrix}$
+
       - `Scalar Multiplication:`
+
         $3\vec{a} = 3 \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 3 \times 2 \\ 3 \times 3 \end{bmatrix} = \begin{bmatrix} 6 \\ 9 \end{bmatrix}$
+
       - `Dot Product (Scalar Product):`
+
         $\vec{a} \cdot \vec{b} = (2)(4) + (3)(1) = 8 + 3 = 11$
+
       - `Magnitude (Length) of a Vector:`
 
         $|\vec{a}| = \sqrt{2^2 + 3^2} = \sqrt{4 + 9} = \sqrt{13}$
         
         $|\vec{b}| = \sqrt{4^2 + 1^2} = \sqrt{16 + 1} = \sqrt{17}$
+
       - `Unit Vector:`
+
         $\hat{a} = \frac{\vec{a}}{|\vec{a}|} = \frac{1}{\sqrt{13}} \begin{bmatrix} 2 \\ 3 \end{bmatrix} = \begin{bmatrix} 2/\sqrt{13} \\ 3/\sqrt{13} \end{bmatrix}$
+
       - `Commutativity of Vector Addition:`
 
         $\vec{a} + \vec{b} = \begin{bmatrix} 2 \\ 3 \end{bmatrix} + \begin{bmatrix} 4 \\ 1 \end{bmatrix} = \begin{bmatrix} 2+4 \\ 3+1 \end{bmatrix} = \begin{bmatrix} 6 \\ 4 \end{bmatrix}$
@@ -77,7 +89,8 @@
 ---
 ### *Changing basis*
 - Example
-  - $\vec{V} = \begin{bmatrix} 4 \\ 2 \end{bmatrix}$
+    
+     $\vec{V} = \begin{bmatrix} 4 \\ 2 \end{bmatrix}$
     Suppose we want to express **v** in a new basis: 
     
     $\vec{b}_1 = \begin{bmatrix} 1 \\ 1 \end{bmatrix}, \quad \vec{b}_2 = \begin{bmatrix} 1 \\ -1 \end{bmatrix}$ Find $\vec{V_b}$ ?
