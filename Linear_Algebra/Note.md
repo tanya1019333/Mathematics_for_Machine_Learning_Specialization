@@ -1,7 +1,7 @@
 ## Motivations
 1. Simultaneous equations
 2. Optimization Problem in Regression
-![Local Image](./optimizeEquation.png)
+<img src="./optimizeEquation.png" width="200">
 
 # Vectors
 ### What is a vector?
@@ -220,6 +220,72 @@
     - $\begin{bmatrix} 2 & 3 \\ 10 & 1 \end{bmatrix} \begin{bmatrix} a \\ b \end{bmatrix} = \begin{bmatrix} 8 \\ 13 \end{bmatrix} => \begin{cases} 2a + 3b = 8 \quad (1) \\ 10a + b = 13 \quad (2) \end{cases}$
     Therefore, the solution is $a = \frac{31}{28}$ and $b = \frac{27}{14}$.
 
+---
+### *Matrix Transform Space*
+- A matrix can transform a vector space by changing the basis vectors.
+- Example:
+  - Given a matrix $A = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix}$ and a vector $\vec{v} = \begin{bmatrix} 5 \\ 6 \end{bmatrix}$, the transformed vector is:
+  - $A \cdot \vec{v} = \begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} \cdot \begin{bmatrix} 5 \\ 6 \end{bmatrix} = \begin{bmatrix} 17 \\ 39 \end{bmatrix}$
+  
+---
+### *Matrix Inverse*
+1. Gaussian Elimination:
+
+    where $A = \begin{bmatrix} 1 & 1 & 3 \\ 1 & 2 & 4 \\ 1 & 1 & 2 \end{bmatrix} \cdot \begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 15 \\ 21 \\ 13 \end{bmatrix}$
+
+    $A^{-1} \cdot A \cdot \begin{bmatrix} a \\ b \\ c \end{bmatrix} = I \cdot \begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} a \\ b \\ c \end{bmatrix} = \begin{bmatrix} 5 \\ 4 \\ 2 \end{bmatrix} , therefore$
+    `a = 5, b = 4, c = 2`
+    
+2. The inverse of a matrix $A$, denoted as $A^{-1}$, is a matrix that, when multiplied by $A$, yields the identity matrix $I$.
+    ### $A \cdot r = S → A^{-1} \cdot A \cdot r = A^{-1} \cdot S$
+    - Only square matrices can have an inverse.
+    - A matrix has an inverse if and only if its determinant is non-zero. If the determinant is zero, the matrix is singular and has no inverse.
+
+    - For a 2x2 matrix $A = \begin{bmatrix} a & b \\ c & d \end{bmatrix}$, the inverse is:
+      $A^{-1} = \frac{1}{ad - bc} \begin{bmatrix} d & -b \\ -c & a \end{bmatrix}$
+      where $ad - bc$ is the determinant of $A$.
+
+    - For larger matrices, methods like Gaussian elimination or cofactor expansion are used to find the inverse.
+
+    - **Properties of Matrix Inverse:**
+      - $(A^{-1})^{-1} = A$
+      - $(AB)^{-1} = B^{-1}A^{-1}$
+      - $(A^T)^{-1} = (A^{-1})^T$
+      - $IA = AI = A$ (Identity Matrix)
+
+    - **Solving Systems of Linear Equations using Inverse:**
+
+      - If you have a system of linear equations in the form $Ax = b$, where $A$ is the coefficient matrix, $x$ is the vector of unknowns, and $b$ is the constant vector, you can solve for $x$ by multiplying both sides by $A^{-1}$:
+      
+      - $A^{-1}Ax = A^{-1}b$
+
+      - $Ix = A^{-1}b$
+
+      - $x = A^{-1}b$
+
+    - Find the Inverse Matrix of $A^{-1}$: where
+    $A = \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 1 \\ 3 & 4 & 2 \end{bmatrix}$
+
+    $\quad(1) \begin{bmatrix} 1 & 1 & 1 \\ 1 & 2 & 1 \\ 3 & 4 & 2 \end{bmatrix} \cdot \begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{bmatrix} = I = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} = A \cdot A^{-1}$
+
+    $\quad(2) \begin{bmatrix} 1 & 1 & 3 \\ 0 & 1 & 1 \\ 0 & 0 & -1 \end{bmatrix} \cdot \begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{bmatrix} = \begin{bmatrix} 1 & 0 & 0 \\ -1 & 1 & 0 \\ -1 & 0 & 1 \end{bmatrix}$
+
+    $\quad(3) \begin{bmatrix} 1 & 1 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{bmatrix} = \begin{bmatrix} -2 & 0 & 3 \\ -2 & 1 & 1 \\ 1 & 0 & -1 \end{bmatrix}$
+    
+    $\quad(4) \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \cdot \begin{bmatrix} a_{11} & a_{12} & a_{13} \\ a_{21} & a_{22} & a_{23} \\ a_{31} & a_{32} & a_{33} \end{bmatrix} = \begin{bmatrix} 0 & -1 & 2 \\ -2 & 1 & 1 \\ 1 & 0 & -1 \end{bmatrix} = I \cdot A^{-1} = A^{-1}$
+```python
+import numpy as np
+A = [[4, 6, 2],
+     [3, 4, 1],
+     [2, 8, 13]]
+s1 = 9; s2 = 7; s3 = 2
+s = [s1, s2, s3]
+
+r = np.linalg.solve(A, s)
+print(r)
+```
+### *Determinant*
+<img src="./Determinant.png" width="300">
 
 ---
 ### Applications
