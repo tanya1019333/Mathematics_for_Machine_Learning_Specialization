@@ -1,15 +1,19 @@
 # Statistics
 ## Mean of dataset
 $$ \bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i $$
-$\bar{x}_{n+1}=\bar{x}_{n-1}+\frac{1}{n}(x_i-\bar{x}_{n-1})$
+這是一個常用的遞迴更新公式，用於在加入新資料點 $x_n$ 時更新平均值：
+$$ \bar{x}_{n}=\bar{x}_{n-1}+\frac{1}{n}(x_n-\bar{x}_{n-1}) $$
 
-$D = \{x_1, x_2, \dots, x_n\}, E= \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 $
+$D = \{x_1, x_2, \dots, x_n\}, \sigma^2 = \frac{1}{n} \sum_{i=1}^{n} (x_i - \bar{x})^2 $
 ```python
 import numpy as np
 
 def reshape(x):
     """return x_reshaped as a flattened vector of the multi-dimensional array x"""
-    x_reshaped = x.reshape(-1)  # 或者用 x.flatten()
+    # 或者用 x.flatten()。
+    # 注意：reshape(-1) 在可能的情況下會回傳一個視圖 (view)，不佔用新記憶體，
+    # 而 flatten() 總是回傳一個副本 (copy)。
+    x_reshaped = x.reshape(-1)
     return x_reshaped
 
 # 範例測試
@@ -192,11 +196,169 @@ print(dot(a,b))
 ```
 
 ### Length of vectors
-$||x|| = \sqrt{<x,x>}$ where x>=0
+$||x|| = \sqrt{<x,x>}$ where x>=0 $$<x,y> = x^Ty => ||x|| = \sqrt{2}$$
+$$<x,y> = x^T \begin{bmatrix} 1 & \frac{-1}{2} \\ \frac{-1}{2} & 1 \end{bmatrix} y = x_1y_1 - \frac{1}{2}(x_2y_1+x_1y_2)+ x_2y_2$$
+$$||x|| = \sqrt{x_1^2 - \frac{1}{2}(x_1x_2+x_2x_1)+ x_2^2} = \sqrt{x_1^2 - (x_1x_2)+ x_2^2}$$
+$$||x||^2 = 1+1-1 = 1$$
+$$||\lambda x|| = \lambda ||x||$$
+三角不等式(Triangle inequality)：
+$$||x+y|| \le ||x|| + ||y||$$
+Cauchy-Schwart inequality：
+$$||<x,y>|| \le ||x|| + ||y||$$
 
-$<x,y> = x^Ty$ => $||x|| = \sqrt{2}$
+### Distances between vectors
+$$d(x,y) = ||x-y||$$
+### **已知條件**
+$$\mathbf{x} = \begin{bmatrix} 1 \\ -1 \\ 3 \end{bmatrix}$$
 
-$<x,y> = x^T \begin{bmatrix} 1 & \frac{-1}{2} \\ \frac{-1}{2} & 1 \end{bmatrix} y$
+內積定義：
+$$\langle a, b \rangle = a^T M b$$
+
+其中
+$$M = \begin{bmatrix} 2 & 1 & 0 \\ 1 & 2 & -1 \\ 0 & -1 & 2 \end{bmatrix}$$
+
+向量的長度（norm）定義為：
+
+$\|\mathbf{x}\| = \sqrt{\langle x, x \rangle}$
+
+### **步驟 1：計算 $Mx$**
+
+$$
+M \cdot x = \begin{bmatrix} 2 & 1 & 0 \\ 1 & 2 & -1 \\ 0 & -1 & 2 \end{bmatrix} \begin{bmatrix} 1 \\ -1 \\ 3 \end{bmatrix} = \begin{bmatrix} 2(1) + 1(-1) + 0(3) \\ 1(1) + 2(-1) + (-1)(3) \\ 0(1) + (-1)(-1) + 2(3) \end{bmatrix} = \begin{bmatrix} 1 \\ -4 \\ 7 \end{bmatrix}$$
+
+### **步驟 2：計算 $x^T (Mx)$**
+
+$$
+x^T (Mx) =
+\begin{bmatrix} 1 & -1 & 3 \end{bmatrix}
+\begin{bmatrix} 1 \\ -4 \\ 7 \end{bmatrix}
+= 1(1) + (-1)(-4) + 3(7)
+= 1 + 4 + 21
+= 26
+$$
+
+### **步驟 3：取平方根得到長度**
+
+$$\|\mathbf{x}\| = \sqrt{\langle x, x \rangle} = \sqrt{26}$$
+$$\boxed{\sqrt{26}}$$
+
+## Angles & Orthogonality
+$$ \cos(\theta) = \frac{\langle x, y \rangle}{||x|| \ ||y||} $$
+其中 $\langle x, y \rangle$ 是向量 $x$ 和 $y$ 的內積，$||x||$ 和 $||y||$ 分別是它們的長度。
+
+**正交性 (Orthogonality)**
+
+如果兩個向量的內積為零，則稱它們是正交的。
+$$ \langle x, y \rangle = 0 $$
+這表示兩個向量之間的夾角為 $90^\circ$（或 $\frac{\pi}{2}$ 弧度），即它們互相垂直。
+
+**範例**
+
+假設我們有兩個向量 $x = \begin{bmatrix} 1 \\ 0 \end{bmatrix}$ 和 $y = \begin{bmatrix} 0 \\ 1 \end{bmatrix}$。
+
+1.  **計算內積**：
+    $$ \langle x, y \rangle = x^T y = \begin{bmatrix} 1 & 0 \end{bmatrix} \begin{bmatrix} 0 \\ 1 \end{bmatrix} = 1 \cdot 0 + 0 \cdot 1 = 0 $$
+
+2.  **計算長度**：
+    $$ ||x|| = \sqrt{1^2 + 0^2} = 1 $$
+    $$ ||y|| = \sqrt{0^2 + 1^2} = 1 $$
+
+3.  **計算夾角餘弦**：
+    $$ \cos(\theta) = \frac{0}{1 \cdot 1} = 0 $$
+
+4.  **計算夾角**：
+    $$ \theta = \arccos(0) = 90^\circ \text{ 或 } \frac{\pi}{2} \text{ 弧度} $$
+
+由於內積為零，向量 $x$ 和 $y$ 是正交的。
+
+```python
+# the matrix A defines the inner product
+A = np.array([[1, -1/2],[-1/2,5]])
+x = np.array([0,-1])
+y = np.array([1,1])
+
+def find_angle(A, x, y):
+    """Compute the angle"""
+    inner_prod = x.T @ A @ y
+    # Fill in the expression for norm_x and norm_y below
+    norm_x = np.sqrt(x.T @ A @ x)
+    norm_y = np.sqrt(y.T @ A @ y)
+    alpha = inner_prod/(norm_x*norm_y)
+    angle = np.arccos(alpha)
+    return np.round(angle,2) 
+
+find_angle(A, x, y)
+```
+```python
+# Fill in the following arrays and use `find_angle` to aim your calculation.
+A = np.array([[1,0,0],[0,2,-1],[0,-1,3]])
+x = np.array([1,1,1])
+y = np.array([2,-1,0])
+
+find_angle(A, x, y)
+```
+
+# Orthogonal Projection
+## projection onto 1D
+1. $\pi_U(x) \in U => \exist \lambda \in R : \pi_U(x) = \lambda b$ (as $\pi_U(x) \in U$)
+2. $\langle b, \pi_U(x)-x \rangle = 0$ (orthogonality)
+<=> $$\langle b, \pi_U(x) \rangle - \langle b,x \rangle  =0$$ 
+<=> $$\langle b,\lambda b \rangle - \lambda \langle b,x \rangle$$
+<=> $$\lambda ||b||^2 - \langle b,x \rangle $$
+<=> $$\lambda = \frac{\langle b,x \rangle}{||b||^2}$$
+
+    => $\pi_U(x) = \lambda b = \frac{\langle b,x \rangle b}{||b||^2}$
+
+### Example
+$\pi_U(x) = \frac{x^Tbb}{||b||^2}$
+where $x = \begin{bmatrix} 1 \\ 2 \end{bmatrix}$ and $b = \begin{bmatrix} 2 \\ 1 \end{bmatrix}$
+
+$\pi_U(x) = \frac{4}{5} \begin{bmatrix} 2 \\ 1 \end{bmatrix}$
+
+If a projection matrix = $\frac{bb^T}{||b||^2}$ then 
+- It is a square matrix, i.e., the number of columns equals the number of rows.
+- It is symmetric.($bb^T = (bb^T)^T$)
+
+### Reconstruction error (Euclidean distance)
+$x=\begin{bmatrix} 1 \\ 1 \\ 1 \end{bmatrix},$ projection of $x = \frac{1}{9}\begin{bmatrix} 5  \\ 10 \\ 10 \end{bmatrix}$ then x - projection of x = $\begin{bmatrix} 1-\frac{5}{9} \\ 1-\frac{10}{9} \\ 1-\frac{10}{9} \end{bmatrix} = \begin{bmatrix} \frac{4}{9} \\ -\frac{1}{9} \\ -\frac{1}{9} \end{bmatrix}$
+$$\sqrt{(\frac{4}{9})^2 + (-\frac{1}{9})^2 + (-\frac{1}{9})^2} = \sqrt{\frac{16}{81}} = \frac{\sqrt{2}}{3} = 0.47... $$
+
+## Projections onto higher-dimensional subspaces
+$$u = [b_1, b_2], \pi_U(x) = \lambda_1b_1+\lambda_2b_2$$
+$$\langle x-\pi_U(x), b_1 \rangle = 0, \langle x-\pi_U(x), b_2 \rangle = 0$$
+---
+
+$\lambda = \begin{bmatrix} \lambda_1 \\ \lambda_2 \\ ... \\ \lambda_M \end{bmatrix}_{M\times1}, B = \begin{bmatrix} b_1 & b_2 & ... & b_M \end{bmatrix}_{D\times M}$
+1. $\pi_U(x) = \sum_{i=1}^M \lambda_i b_i$
+2. $\langle \pi_U(x) - x, b_i \rangle = 0, i = 1,...,M$
+
+Therefore
+$$\pi_U(x) = B\lambda$$
+
+$$\langle \pi_U(x)-x, b_i \rangle = \langle B\lambda - x, b_i \rangle = 0 ?$$
+
+<=> $ \langle B \lambda, b_i \rangle - \langle B \lambda, x \rangle = 0, i = 1, ..., M$
+
+<=> $ \lambda^T B^T bi \lambda - \lambda^T B^T x = 0$
+
+<=> $\lambda^TB^TB - x^TB = 0$
+
+<=> $\lambda^T = x^TB(B^TB)^{-1}$
+
+<=> $\lambda = (B^TB)^{-1}B^Tx$
+
+=> $\pi_U(x) = B(B^TB)^{-1}B^Tx$ → **Projection Matrix**
+
+## projection onto 2D
+### Example
+where $x = \begin{bmatrix} 2 \\ 1 \\ 1 \end{bmatrix}, b_1 = \begin{bmatrix} 1 \\ 2 \\ 0 \end{bmatrix}, b_2 = \begin{bmatrix} 1 \\ 1 \\ 0 \end{bmatrix}$
+$$u = [b_1, b_2], \pi_U(x) = \lambda_1b_1+\lambda_2b_2$$
+$$\langle x-\pi_U(x), b_1 \rangle = 0, \langle x-\pi_U(x), b_2 \rangle = 0$$
+$$B = \begin{bmatrix} b_1 & b_2 \end{bmatrix} = \begin{bmatrix} 1 & 1 \\ 2 & 1 \\ 0 & 0 \end{bmatrix}$$
+$$\lambda = (B^TB)^{-1}B^Tx$$
+
+$B^T = \begin{bmatrix} 1 & 2 & 0 \\ 1 & 1 & 0 \end{bmatrix}, B^Tx = \begin{bmatrix} 4 \\ 3 \end{bmatrix}, B^TB = \begin{bmatrix} 5 & 3 \\ 3 & 2 \end{bmatrix}, (B^TB)^{-1} = \begin{bmatrix} 2 & -3 \\ -3 & 5 \end{bmatrix}$
+$$\lambda = \begin{bmatrix} -1 \\ 3 \end{bmatrix}, \pi_U(x) = B\lambda = -1b_1+3b_2 =  \begin{bmatrix} 2 \\ 1 \\ 0 \end{bmatrix}$$
 
 
 ---
